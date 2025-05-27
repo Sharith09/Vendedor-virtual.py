@@ -1,1 +1,31 @@
-# Vendedor-virtual
+import streamlit as st
+
+# Título de la app
+st.title("🛒 Vendedor Virtual")
+
+# Productos disponibles
+productos = [
+    {"nombre": "Combo de snacks", "precio": 19900, "popularidad": 5},
+    {"nombre": "Gaseosa 1.5L", "precio": 5200, "popularidad": 4},
+    {"nombre": "Papas grandes", "precio": 7000, "popularidad": 3},
+    {"nombre": "Galletas surtidas", "precio": 5000, "popularidad": 4},
+    {"nombre": "Chocolatina", "precio": 2500, "popularidad": 2},
+    {"nombre": "Combo ahorro (jugos + dulces)", "precio": 19500, "popularidad": 5},
+    {"nombre": "Brownie artesanal", "precio": 8500, "popularidad": 3}
+]
+
+# Entrada del usuario
+presupuesto = st.number_input("¿Con cuánto dinero cuentas? (COP)", min_value=0, step=1000)
+
+# Botón
+if st.button("Recomendar productos"):
+    sugerencias = [p for p in productos if p["precio"] <= presupuesto]
+    sugerencias.sort(key=lambda x: x["popularidad"], reverse=True)
+
+    if sugerencias:
+        st.subheader("🛍️ Recomendaciones:")
+        for p in sugerencias:
+            st.write(f"🔸 {p['nombre']} - ${p['precio']} | Popularidad: {p['popularidad']}/5")
+    else:
+        st.warning("No hay productos disponibles con tu presupuesto.")
+
